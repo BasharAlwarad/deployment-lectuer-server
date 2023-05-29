@@ -35,14 +35,17 @@ async function connectToDatabase() {
   }
 }
 
-// Routes
-app.get('/', (req, res) => {
+// @dec     default route
+app.get('/', async (req, res) => {
   res.status(200).json({ data: 'Hello, World!' });
+  try {
+    const data = await User.find();
+    res.status(200).json(data);
+  } catch (error) {
+    console.error(error.message);
+  }
 });
 
-app.get('/healthz', (req, res) => {
-  res.status(200).json({ status: 'ok' });
-});
 // @dec     get all users from local json
 app.get('/data', async (req, res) => {
   try {
