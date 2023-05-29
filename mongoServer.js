@@ -25,9 +25,8 @@ app.get('/healthz', (req, res) => {
 // @dec     get all users from local json
 app.get('/data', async (req, res) => {
   try {
-    const data = await User.find();
-    res.status(200).json(data);
-    console.log(data);
+    // const data = await User.find();
+    res.status(200).json({ hi: 'hi' });
   } catch (error) {
     console.error(error.message);
   }
