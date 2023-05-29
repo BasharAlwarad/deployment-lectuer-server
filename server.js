@@ -7,7 +7,7 @@ app.use(express.json());
 
 // @dec     get all users from local json
 app.get('/data', (req, res) => {
-  fs.readFile('../data/data.json', 'utf-8', (error, data) => {
+  fs.readFile('./data/data.json', 'utf-8', (error, data) => {
     if (error) {
       res.status(500).json({ error });
     } else {
@@ -19,7 +19,7 @@ app.get('/data', (req, res) => {
 // @dec     POST add user to local json
 app.post('/data', (req, res) => {
   const newItem = req.body;
-  fs.readFile('../data/data.json', 'utf8', (err, data) => {
+  fs.readFile('./data/data.json', 'utf8', (err, data) => {
     if (err) {
       console.error(err);
       res.status(500).send('Error reading data file');
@@ -41,7 +41,7 @@ app.post('/data', (req, res) => {
 // @dec     DELETE remove user from local json
 app.delete('/data/:id', (req, res) => {
   const id = req.params.id;
-  fs.readFile('../data/data.json', 'utf8', (err, data) => {
+  fs.readFile('./data/data.json', 'utf8', (err, data) => {
     if (err) {
       console.error(err);
       res.status(500).send('Error reading data file');
