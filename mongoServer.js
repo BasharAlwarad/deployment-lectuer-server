@@ -1,11 +1,15 @@
 import express from 'express';
-import { connectToDatabase } from './config/db.js';
+import mongoose from 'mongoose';
+// import { connectToDatabase } from './config/db.js';
 import dotenv from 'dotenv';
 import User from './models/User.js';
 // import fs from 'fs';
 import cors from 'cors';
 
 dotenv.config();
+
+const uri =
+  'mongodb+srv://beelwarad52:oeIxhRnSaal8SrYW@deployment-lectuer.tsmgriq.mongodb.net/?retryWrites=true&w=majority';
 
 // .then(() => {
 //   mongoose.connection.close();
@@ -17,7 +21,24 @@ dotenv.config();
 const app = express();
 app.use(cors());
 app.use(express.json());
-connectToDatabase();
+// connectToDatabase();
+
+async function connectToDatabase() {
+  try {
+    await mongoose.connect(uri, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log('Connected successfully to the database.');
+  } catch (err) {
+    console.error('Failed to connect to the database. Error:', err);
+  }
+}
+
+// Routes
+app.get('/', (req, res) => {
+  res.status(200).json({ data: 'Hello, World!' });
+});
 
 app.get('/healthz', (req, res) => {
   res.status(200).json({ status: 'ok' });
@@ -66,4 +87,5 @@ app.delete('/data/:id', async (req, res) => {
 
 app.listen(8000, () => {
   console.log('Server is running on Port 8000');
+  connectToDatabase();
 });
