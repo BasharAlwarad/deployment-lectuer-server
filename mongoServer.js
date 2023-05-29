@@ -7,7 +7,6 @@ import cors from 'cors';
 
 dotenv.config();
 
-connectToDatabase();
 // .then(() => {
 //   mongoose.connection.close();
 // })
@@ -18,6 +17,7 @@ connectToDatabase();
 const app = express();
 app.use(cors());
 app.use(express.json());
+connectToDatabase();
 
 app.get('/healthz', (req, res) => {
   res.status(200).json({ status: 'ok' });
