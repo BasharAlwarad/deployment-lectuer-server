@@ -2,8 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 // import { connectToDatabase } from './config/db.js';
 import dotenv from 'dotenv';
-import User from './models/User.js';
-// import fs from 'fs';
+// import User from './models/User.js';
 import cors from 'cors';
 
 dotenv.config();
@@ -18,9 +17,6 @@ const uri =
 //   console.error('Error during database connection:', err);
 // });
 
-const app = express();
-app.use(cors());
-app.use(express.json());
 // connectToDatabase();
 
 async function connectToDatabase() {
@@ -35,21 +31,19 @@ async function connectToDatabase() {
   }
 }
 
-// @dec     default route
-app.get('/', async (req, res) => {
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+// @dec     get all users from local json
+app.get('/', (req, res) => {
   res.status(200).json({ data: 'Hello, World!' });
-  try {
-    const data = await User.find();
-    res.status(200).json(data);
-  } catch (error) {
-    console.error(error.message);
-  }
 });
 
 // @dec     get all users from local json
 app.get('/data', async (req, res) => {
   try {
-    const data = await User.find();
+    const data = await User.find({});
     res.status(200).json(data);
   } catch (error) {
     console.error(error.message);
@@ -85,6 +79,24 @@ app.delete('/data/:id', async (req, res) => {
   } catch (err) {
     console.error('Error deleting user:', err);
     res.status(500).json({ error: 'Failed to delete user' });
+  }
+});
+
+// User model
+const User = mongoose.model('User', {
+  name: String,
+  email: String,
+  password: String,
+});
+
+// Route for fetching all users
+app.get('/users', async (req, res) => {
+  try {
+    const users = await User.find({});
+    res.json(users);
+  } catch (err) {
+    console.error('Error fetching users:', err);
+    res.status(500).json({ error: 'Failed to fetch users' });
   }
 });
 
