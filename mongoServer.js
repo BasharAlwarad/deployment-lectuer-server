@@ -35,7 +35,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// @dec     get all users from local json
+// @dec     testing
+app.get('/healthz', (req, res) => {
+  res.status(200).json({ data: 'Hello, World!' });
+});
+// @dec     Initial
 app.get('/', (req, res) => {
   res.status(200).json({ data: 'Hello, World!' });
 });
