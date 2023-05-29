@@ -2,9 +2,9 @@ import { Router } from 'express';
 
 const app = Router();
 
-import { getUsers, createUser } from '../controllers/users.js';
+import { getUsers, createUser, deletedOneUser } from '../controllers/users.js';
 
 app.route('/').get(getUsers).post(createUser);
-// app.route('/:id').get(deleteUser);
+app.route('/:id').delete(deletedOneUser);
 
 export default app;
