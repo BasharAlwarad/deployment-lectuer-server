@@ -1,14 +1,21 @@
 import express from 'express';
 import mongoose from 'mongoose';
-// import { connectToDatabase } from './config/db.js';
+import { connectToDatabase } from './config/db.js';
 import dotenv from 'dotenv';
 // import User from './models/User.js';
 import cors from 'cors';
 
-dotenv.config();
+// dotenv.config();
 
-const uri =
-  'mongodb+srv://beelwarad52:oeIxhRnSaal8SrYW@deployment-lectuer.tsmgriq.mongodb.net/?retryWrites=true&w=majority';
+// const uri =
+//   'mongodb+srv://beelwarad52:oeIxhRnSaal8SrYW@deployment-lectuer.tsmgriq.mongodb.net/?retryWrites=true&w=majority';
+
+// User model
+const User = mongoose.model('User', {
+  name: String,
+  email: String,
+  password: String,
+});
 
 // .then(() => {
 //   mongoose.connection.close();
@@ -17,23 +24,23 @@ const uri =
 //   console.error('Error during database connection:', err);
 // });
 
-// connectToDatabase();
-
-async function connectToDatabase() {
-  try {
-    await mongoose.connect(uri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    console.log('Connected successfully to the database.');
-  } catch (err) {
-    console.error('Failed to connect to the database. Error:', err);
-  }
-}
+// async function connectToDatabase() {
+//   try {
+//     await mongoose.connect(uri, {
+//       useNewUrlParser: true,
+//       useUnifiedTopology: true,
+//     });
+//     console.log('Connected successfully to the database.');
+//   } catch (err) {
+//     console.error('Failed to connect to the database. Error:', err);
+//   }
+// }
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+connectToDatabase();
 
 // @dec     testing
 app.get('/healthz', (req, res) => {
@@ -84,13 +91,6 @@ app.delete('/data/:id', async (req, res) => {
     console.error('Error deleting user:', err);
     res.status(500).json({ error: 'Failed to delete user' });
   }
-});
-
-// User model
-const User = mongoose.model('User', {
-  name: String,
-  email: String,
-  password: String,
 });
 
 // Route for fetching all users
