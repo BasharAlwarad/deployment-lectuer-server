@@ -5,8 +5,8 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "start": "node server.js",
-    "MDServer": "node mongoServer.js"
+    "start": "node mongoServer.js",
+    "localServer": "node server.js"
   },
   "keywords": [],
   "author": "",
