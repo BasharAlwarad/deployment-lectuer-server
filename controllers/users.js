@@ -4,7 +4,6 @@ import User from '../models/User.js';
 const getUsers = async (req, res) => {
   try {
     const users = await User.find();
-
     if (!users.length) {
       return res.status(400).json({ error: 'No users found' });
     }

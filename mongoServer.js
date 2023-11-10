@@ -19,7 +19,8 @@ app.use((req, res, next) => {
 
 // @dec     Initial
 app.get('/', (req, res) => {
-  res.status(200).json({ data: 'Hello, World!' });
+  const data = 'Hello, World!';
+  res.json({ data });
 });
 
 // @dec     testing

@@ -5,6 +5,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.get('/', (req, res) => {
+  res.status(200).json({ data: 'server running on localHost:5000' });
+});
+
 // @dec     get all users from local json
 app.get('/data', (req, res) => {
   fs.readFile('./data/data.json', 'utf-8', (error, data) => {
@@ -17,9 +21,31 @@ app.get('/data', (req, res) => {
 });
 
 // @dec     POST add user to local json
+// app.post('/data', (req, res) => {
+//   const newItem = req.body;
+//   fs.readFile('./data/data.json', 'utf8', (err, data) => {
+//     if (err) {
+//       console.error(err);
+//       res.status(500).send('Error reading data file');
+//     } else {
+//       let jsonData = JSON.parse(data);
+//       jsonData.user.push(newItem);
+//       fs.writeFile('../data/data.json', JSON.stringify(jsonData), (err) => {
+//         if (err) {
+//           console.error(err);
+//           res.status(500).send('Error writing to data file');
+//         } else {
+//           res.status(201).json(newItem);
+//         }
+//       });
+//     }
+//   });
+// });
+
+// @dec     POST add user to local json
 app.post('/data', (req, res) => {
   const newItem = req.body;
-  fs.readFile('./data/data.json', 'utf8', (err, data) => {
+  fs.readFile('../data/data.json', 'utf8', (err, data) => {
     if (err) {
       console.error(err);
       res.status(500).send('Error reading data file');
